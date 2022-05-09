@@ -1,2 +1,4 @@
 # go-track-id-generator
-Generate unique tracking ID by using a master key &amp; string input
+Generate hashed N-length tracking ID from string of any length.
+
+To generate unique tracking ID, you can use timestamp as input.
