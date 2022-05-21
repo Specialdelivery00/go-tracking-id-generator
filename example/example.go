@@ -12,9 +12,10 @@ const (
 
 func main() {
 	sampleStringInput := "Sample1"
-	trackIdGen := generator.NewGenerator(masterKey, length)
-	trackingId := trackIdGen.GenerateSHA512TrackingId(sampleStringInput)
+	sha512TrackIdGen := generator.NewSHA512Generator(masterKey, length)
+	sha256TrackIdGen := generator.NewSHA256Generator(masterKey, length)
+	trackingId := sha512TrackIdGen.GenerateTrackingId(sampleStringInput)
 	fmt.Println("SHA-512:" + trackingId)
-	trackingId = trackIdGen.GenerateSHA256TrackingId(sampleStringInput)
+	trackingId = sha256TrackIdGen.GenerateTrackingId(sampleStringInput)
 	fmt.Println("SHA-256:" + trackingId)
 }

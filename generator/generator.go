@@ -7,22 +7,31 @@ import (
 )
 
 type Generator interface {
-	GenerateSHA512TrackingId(stringInput string) (trackingId string)
-	GenerateSHA256TrackingId(stringInput string) (trackingId string)
+	GenerateTrackingId(stringInput string) (trackingId string)
 }
 
-type generator struct {
+type generatorSHA512 struct {
 	masterKey string
 	length    int
 }
 
-// NewGenerator is used to generate a new generator
-func NewGenerator(masterKey string, length int) Generator {
-	return &generator{masterKey: masterKey, length: length}
+type generatorSHA256 struct {
+	masterKey string
+	length    int
 }
 
-// GenerateSHA512TrackingId is used to generate a N-length tracking ID using SHA-512 hash algo by accepting a string input.
-func (generator *generator) GenerateSHA512TrackingId(stringInput string) (trackingId string) {
+// NewSHA512Generator is used to generate a new generator
+func NewSHA512Generator(masterKey string, length int) Generator {
+	return &generatorSHA512{masterKey: masterKey, length: length}
+}
+
+// NewSHA256Generator is used to generate a new generator
+func NewSHA256Generator(masterKey string, length int) Generator {
+	return &generatorSHA256{masterKey: masterKey, length: length}
+}
+
+// GenerateTrackingId is used to generate a N-length tracking ID using SHA-512 hash algo by accepting a string input.
+func (generator *generatorSHA512) GenerateTrackingId(stringInput string) (trackingId string) {
 	data := generator.masterKey + stringInput
 	hash := sha512.New()
 	hash.Write([]byte(data))
@@ -30,8 +39,8 @@ func (generator *generator) GenerateSHA512TrackingId(stringInput string) (tracki
 	return fmt.Sprintf("%x", byteString)[:generator.length]
 }
 
-// GenerateSHA256TrackingId is used to generate a N-length tracking ID using SHA-256 hash algo by accepting a string input.
-func (generator *generator) GenerateSHA256TrackingId(stringInput string) (trackingId string) {
+// GenerateTrackingId is used to generate a N-length tracking ID using SHA-256 hash algo by accepting a string input.
+func (generator *generatorSHA256) GenerateTrackingId(stringInput string) (trackingId string) {
 	data := generator.masterKey + stringInput
 	hash := sha256.New()
 	hash.Write([]byte(data))
