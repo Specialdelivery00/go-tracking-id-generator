@@ -1,7 +1,7 @@
 package generator
 
 import (
-	"crypto/sha1"
+	"crypto/sha512"
 	"fmt"
 )
 
@@ -22,7 +22,7 @@ func NewGenerator(masterKey string, length int) Generator {
 // GenerateTrackingId is used to generate a N-length tracking ID by accepting a string input.
 func (generator *generator) GenerateTrackingId(stringInput string) (trackingId string) {
 	data := generator.masterKey + stringInput
-	hash := sha1.New()
+	hash := sha512.New()
 	hash.Write([]byte(data))
 	byteString := hash.Sum(nil)
 	return fmt.Sprintf("%x", byteString)[:generator.length]
