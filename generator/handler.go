@@ -20,16 +20,6 @@ type generatorSHA256 struct {
 	length    int
 }
 
-// NewSHA512Generator is used to generate a new generator
-func NewSHA512Generator(masterKey string, length int) Generator {
-	return &generatorSHA512{masterKey: masterKey, length: length}
-}
-
-// NewSHA256Generator is used to generate a new generator
-func NewSHA256Generator(masterKey string, length int) Generator {
-	return &generatorSHA256{masterKey: masterKey, length: length}
-}
-
 // GenerateTrackingId is used to generate a N-length tracking ID using SHA-512 hash algo by accepting a string input.
 func (generator *generatorSHA512) GenerateTrackingId(stringInput string) (trackingId string) {
 	data := generator.masterKey + stringInput
